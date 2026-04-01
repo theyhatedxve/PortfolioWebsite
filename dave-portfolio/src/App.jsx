@@ -1,6 +1,27 @@
 import React from "react";
 import "./App.css";
 import profile from "./assets/me.png"; // add your image in src folder
+import emailjs from "emailjs-com";
+
+function sendEmail(e) {
+  e.preventDefault();
+
+  emailjs.sendForm(
+    "service_u3z4nqy",
+    "template_5a99xrq",
+    e.target,
+    "GwnK_Wl-kky8QqqUi"
+  ).then(
+    () => {
+      alert("Message sent successfully");
+    },
+    () => {
+      alert("Failed to send message");
+    }
+  );
+
+  e.target.reset();
+}
 
 function App() {
   return (
@@ -148,10 +169,10 @@ function App() {
             <h3>Available for VA roles</h3>
           </div>
 
-          <form className="contact-form">
-            <input type="text" placeholder="Your Name" />
-            <input type="email" placeholder="Your Email" />
-            <textarea placeholder="Your Message"></textarea>
+          <form className="contact-form" onSubmit={sendEmail}>
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input type="email" name="email" placeholder="Your Email" required />
+            <textarea name="message" placeholder="Your Message" required></textarea>
             <button type="submit">Send Message</button>
           </form>
 
